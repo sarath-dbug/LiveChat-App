@@ -1,0 +1,50 @@
+
+  
+  .signup-welcome-logo{
+  height: 20vw;
+  }
+  
+
+  .signup-container{
+    height: 90vh;
+    width: 90vw;
+    background-color: #f4f5f8;
+    border-radius: 20px;
+    display: flex;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  
+  
+  .signup-image-container{
+  flex: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .signup-text {
+    font-size: 2vw;
+    padding-bottom: 20px;
+  }
+  
+  .signup-box{
+    flex: 0.7;
+    background-color: white;
+    border-radius: 20px;
+    margin: 10px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #63d7b0;
+    font-weight: bolder;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .signup-hyper {
+    color: darkviolet;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  

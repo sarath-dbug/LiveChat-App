@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './myStyles.css';
+import './Sidebar.css';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -11,7 +11,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleTheme } from '../Features/themeSlice';
+import { toggleTheme } from '../../features/themeSlice';
 import axios from 'axios';
 
 function Sidebar() {
@@ -50,38 +50,38 @@ function Sidebar() {
   }
 
   return (
-    <div className='sidebar-container'>
+    <div className='sb-container'>
       <div className={"sb-header" + (lightTheme ? "" : " dark ")}>
-        <div className='other-icons'>
+        <div className='sb-other-icons'>
           <IconButton onClick={() => navigate('/app/welcome')}>
-            <AccountCircleIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+            <AccountCircleIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
           <IconButton onClick={() => navigate('users')}>
-            <PersonAddIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+            <PersonAddIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
           <IconButton onClick={() => navigate('groups')}>
-            <GroupAddIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+            <GroupAddIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
           <IconButton onClick={() => navigate('create-groups')}>
-            <AddCircleIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+            <AddCircleIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
           <IconButton onClick={() => dispatch(toggleTheme())}>
-            {lightTheme ? <NightlightIcon className={"icon" + (lightTheme ? "" : " dark ")} /> : <LightModeIcon className={"icon" + (lightTheme ? "" : " dark ")} />}
+            {lightTheme ? <NightlightIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} /> : <LightModeIcon className={"icon" + (lightTheme ? "" : " dark ")} />}
           </IconButton>
           <IconButton onClick={() => {
             sessionStorage.removeItem("userData");
             navigate('/');
           }}>
-            <ExitToAppIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+            <ExitToAppIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
         </div>
       </div>
 
       <div className={"sb-search" + (lightTheme ? "" : " dark ")}>
         <IconButton>
-          <SearchIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+          <SearchIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
         </IconButton>
-        <input type="text" placeholder='search' className={"search-box" + (lightTheme ? "" : " dark ")} />
+        <input type="text" placeholder='search' className={"sb-search-box" + (lightTheme ? "" : " dark ")} />
       </div>
 
       <div className={"sb-conversations" + (lightTheme ? "" : " dark ")}>
@@ -92,7 +92,7 @@ function Sidebar() {
             const timeStamp = conversation.latestMessage ? new Date(conversation.latestMessage.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
 
             return (
-              <div className='conversation-container'
+              <div className='sb-conversation-container'
                 key={index}
                 onClick={() => navigate(`chat/${conversation._id}&${conversation.chatName}`)}>
                 <p className='con-icon'>{conversation.chatName[0]}</p>
@@ -109,13 +109,13 @@ function Sidebar() {
             const timeStamp = conversation.latestMessage ? new Date(conversation.latestMessage.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
 
             return (
-              <div className='conversation-container'
+              <div className='sb-conversation-container'
                 key={index}
                 onClick={() => navigate(`chat/${conversation._id}&${otherUser.name}`)}>
-                <p className='con-icon'>{otherUser.name[0]}</p>
-                <p className='con-title'>{otherUser.name}</p>
-                <p className='con-lastMessage'>{latestMessageContent}</p>
-                <p className='con-timeStamp'>{timeStamp}</p>
+                <p className='sb-con-icon'>{otherUser.name[0]}</p>
+                <p className='sb-con-title'>{otherUser.name}</p>
+                <p className='sb-con-lastMessage'>{latestMessageContent}</p>
+                <p className='sb-con-timeStamp'>{timeStamp}</p>
               </div>
             );
           }

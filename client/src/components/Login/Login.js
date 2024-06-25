@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../Images/comments_512px.png";
+import logo from "../../assets/images/comments_512px.png";
 import { Backdrop, CircularProgress, Button, TextField } from '@mui/material';
 import axios from 'axios';
-import Toaster from './Toaster';
+import Toaster from '../Toaster/Toaster';
 
 function Login() {
 

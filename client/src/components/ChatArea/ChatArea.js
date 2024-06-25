@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import "./ChatArea.css"
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
-import MessageOthers from './MessageOthers';
-import MessageSelf from './MessageSelf';
+import MessageOthers from '../MessageOthers/MessageOthers';
+import MessageSelf from '../MessageSelf/MessageSelf';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import axios from 'axios';
-import { refreshSidebarFun } from '../Features/refreshSidebar';
+import { refreshSidebarFun } from '../../features/refreshSidebar';
 import io from 'socket.io-client';
 
 const ENDPOINT = 'http://localhost:8080';
@@ -127,16 +128,16 @@ function ChatArea() {
     return (
       <div className={'chatArea-container' + (lightTheme ? '' : ' dark ')}>
         <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
-          <p className='con-icon'>{chat_user[0]}</p>
-          <div className={'header-text' + (lightTheme ? '' : ' dark ')}>
-            <p className={'con-title' + (lightTheme ? '' : ' dark ')}>{chat_user}</p>
+          <p className='chatArea-con-icon'>{chat_user[0]}</p>
+          <div className={'chatArea-header-text' + (lightTheme ? '' : ' dark ')}>
+            <p className={'chatArea-con-title' + (lightTheme ? '' : ' dark ')}>{chat_user}</p>
           </div>
           <IconButton>
-            <DeleteIcon className={'icon' + (lightTheme ? '' : ' dark ')} />
+            <DeleteIcon className={'chatArea-icon' + (lightTheme ? '' : ' dark ')} />
           </IconButton>
         </div>
 
-        <div className={'messages-container' + (lightTheme ? '' : ' dark ')}>
+        <div className={'chatArea-messages-container' + (lightTheme ? '' : ' dark ')}>
           {allMessages
             .slice(0)
             .reverse()
@@ -151,11 +152,11 @@ function ChatArea() {
             })}
         </div>
 
-        <div className={'text-input-area' + (lightTheme ? '' : ' dark ')}>
+        <div className={'chatArea-text-input-area' + (lightTheme ? '' : ' dark ')}>
           <input
             type='text'
             placeholder='Type a Message'
-            className={'search-box' + (lightTheme ? '' : ' dark ')}
+            className={'chatArea-search-box' + (lightTheme ? '' : ' dark ')}
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
             onKeyDown={(e) => {
@@ -165,7 +166,7 @@ function ChatArea() {
             }}
           />
           <IconButton
-            className={'icon' + (lightTheme ? '' : ' dark ')}
+            className={'chatArea-icon' + (lightTheme ? '' : ' dark ')}
             onClick={() => {
               sendMessage();
             }}

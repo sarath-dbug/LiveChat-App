@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
-import './myStyles.css'
-import Sidebar from './Sidebar'
+import './MainContainer.css'
+import Sidebar from '../Sidebar/Sidebar'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 

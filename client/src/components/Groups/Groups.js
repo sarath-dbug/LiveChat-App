@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './myStyles.css';
-import logo from "../Images/comments_512px.png";
+import './Groups.css';
+import logo from "../../assets/images/comments_512px.png";
 import { IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
-import { refreshSidebarFun } from "../Features/refreshSidebar";
+import { refreshSidebarFun } from '../../features/refreshSidebar';
 import axios from 'axios';
 
 function Groups() {
@@ -67,14 +67,14 @@ function Groups() {
                     ease: "anticipate",
                     duration: "0.3"
                 }}
-                className='list-container'>
-                <div className={"ug-header" + (lightTheme ? "" : " dark ")}>
+                className='group-list-container'>
+                <div className={"group-ug-header" + (lightTheme ? "" : " dark ")}>
                     <img src={logo}
                         style={{ height: "2rem", width: "2rem", marginLeft: "10px" }}
                     />
-                    <p className={"ug-title" + (lightTheme ? "" : " dark ")}>Available Groups</p>
+                    <p className={"group-ug-title" + (lightTheme ? "" : " dark ")}>Available Groups</p>
                     <IconButton
-                        className={"icon" + (lightTheme ? "" : " dark")}
+                        className={"group-icon" + (lightTheme ? "" : " dark")}
                         onClick={() => {
                             dispatch(refreshSidebarFun());
                         }}
@@ -83,24 +83,24 @@ function Groups() {
                     </IconButton>
                 </div>
 
-                <div className={"sb-search" + (lightTheme ? "" : " dark ")}>
+                <div className={"group-sb-search" + (lightTheme ? "" : " dark ")}>
                     <IconButton>
-                        <SearchIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+                        <SearchIcon className={"group-icon" + (lightTheme ? "" : " dark ")} />
                     </IconButton>
-                    <input type="text" placeholder='Search' className={"search-box" + (lightTheme ? "" : " dark ")} />
+                    <input type="text" placeholder='Search' className={"group-search-box" + (lightTheme ? "" : " dark ")} />
                 </div>
 
-                <div className="ug-list">
+                <div className="group-ug-list">
                     {groups.map((group, index) => (
                         <motion.div
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.98 }}
-                            className={"list-item" + (lightTheme ? "" : " dark ")}
+                            className={"group-list-item" + (lightTheme ? "" : " dark ")}
                             key={index}
                             onClick={() => handleGroupClick(group._id)}
                         >
-                            <p className="con-icon">{group.chatName[0]}</p>
-                            <p className={"con-title" + (lightTheme ? "" : " dark ")}>{group.chatName}</p>
+                            <p className="group-con-icon">{group.chatName[0]}</p>
+                            <p className={"group-con-title" + (lightTheme ? "" : " dark ")}>{group.chatName}</p>
                         </motion.div>
                     ))}
                 </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './myStyles.css';
-import logo from "../Images/comments_512px.png";
+import './Users.css';
+import logo from "../../assets/images/comments_512px.png";
 import { IconButton } from '@mui/material';
 import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from "framer-motion";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { refreshSidebarFun } from '../Features/refreshSidebar';
+import { refreshSidebarFun } from '../../features/refreshSidebar';
 
 function Users() {
     const lightTheme = useSelector((state) => state.themeKey);
@@ -57,36 +57,36 @@ function Users() {
                     ease: "anticipate",
                     duration: "0.3"
                 }}
-                className='list-container'>
-                <div className={"ug-header" + (lightTheme ? "" : " dark ")}>
+                className='user-list-container'>
+                <div className={"user-ug-header" + (lightTheme ? "" : " dark ")}>
                     <img src={logo}
                         style={{ height: "2rem", width: "2rem", marginLeft: "10px" }}
                     />
-                    <p className={"ug-title" + (lightTheme ? "" : " dark ")}>Available Users</p>
+                    <p className={"user-ug-title" + (lightTheme ? "" : " dark ")}>Available Users</p>
                     <IconButton
                         onClick={() => dispatch(refreshSidebarFun())}
-                        className={"icon" + (lightTheme ? "" : " dark")}
+                        className={"user-icon" + (lightTheme ? "" : " dark")}
                     >
                         <RefreshIcon />
                     </IconButton>
                 </div>
-                <div className={"sb-search" + (lightTheme ? "" : " dark ")}>
+                <div className={"user-sb-search" + (lightTheme ? "" : " dark ")}>
                     <IconButton>
-                        <SearchIcon className={"icon" + (lightTheme ? "" : " dark ")} />
+                        <SearchIcon className={"user-icon" + (lightTheme ? "" : " dark ")} />
                     </IconButton>
-                    <input type="text" placeholder='Search' className={"search-box" + (lightTheme ? "" : " dark ")} />
+                    <input type="text" placeholder='Search' className={"user-search-box" + (lightTheme ? "" : " dark ")} />
                 </div>
-                <div className="ug-list">
+                <div className="user-ug-list">
                     {users.map((user, index) => (
                         <motion.div
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.98 }}
-                            className={"list-item" + (lightTheme ? "" : " dark ")}
+                            className={"user-list-item" + (lightTheme ? "" : " dark ")}
                             key={index}
                             onClick={() => handleUserClick(user._id)}
                         >
-                            <p className="con-icon">{user.name[0]}</p>
-                            <p className={"con-title" + (lightTheme ? "" : " dark ")}>{user.name}</p>
+                            <p className="user-con-icon">{user.name[0]}</p>
+                            <p className={"user-con-title" + (lightTheme ? "" : " dark ")}>{user.name}</p>
                         </motion.div>
                     ))}
                 </div>

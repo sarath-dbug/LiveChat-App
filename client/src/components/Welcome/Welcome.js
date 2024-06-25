@@ -1,5 +1,6 @@
 import React from 'react'
-import logo from "../Images/comments_512px.png";
+import logo from "../../assets/images/comments_512px.png";
+import './Welcome.css';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import "./Signup.css"
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../Images/comments_512px.png";
+import logo from "../../assets/images/comments_512px.png";
 import { Backdrop, CircularProgress, Button, TextField } from '@mui/material';
 import axios from 'axios';
-import Toaster from './Toaster';
+import Toaster from '../Toaster/Toaster';
 
 
 function Signup() {
@@ -36,7 +37,7 @@ function Signup() {
             );
             setSignupStatus({ msg: "Success", key: Math.random() });
             navigator("/app/welcome");
-            sessionStorage.setItem("userData", JSON.stringify(response));    
+            sessionStorage.setItem("userData", JSON.stringify(response));
             setLoading(false);
 
         } catch (error) {
@@ -61,12 +62,12 @@ function Signup() {
             >
                 <CircularProgress color="secondary" />
             </Backdrop>
-            <div className='login-container'>
-                <div className="image-container">
-                    <img src={logo} alt="Logo" className='welcome-logo' />
+            <div className='signup-container'>
+                <div className="signup-image-container">
+                    <img src={logo} alt="Logo" className='signup-welcome-logo' />
                 </div>
-                <div className="login-box">
-                    <p className='login-text'>Create an Account</p>
+                <div className="signup-box">
+                    <p className='signup-text'>Create an Account</p>
                     <TextField
                         onChange={changeHandler}
                         id="standard-basic"
@@ -117,7 +118,7 @@ function Signup() {
                     </Button>
                     <p>
                         Already have an Account ?
-                        <Link className="hyper" to="/">Login</Link>
+                        <Link className="signup-hyper" to="/">Login</Link>
                     </p>
                     {signupStatus ? (
                         <Toaster key={signupStatus.key} message={signupStatus.msg} />
