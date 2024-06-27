@@ -1,49 +1,55 @@
 
-  
-  .login-welcome-logo{
-    height: 20vw;
-    }
-    
-  
-    .login-container{
-      height: 90vh;
-      width: 90vw;
-      background-color: #f4f5f8;
-      border-radius: 20px;
-      display: flex;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    }
-    
-    
-    .login-image-container{
-    flex: 0.3;
+.login-welcome-logo{
+height: 20vw;
+}
+
+
+.login-container{
+  height: 90vh;
+  width: 90vw;
+  background-color: #f4f5f8;
+  border-radius: 20px;
+  display: flex;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+.login-image-container{
+flex: 0.3;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.login-text {
+  font-size: 2vw;
+  padding-bottom: 20px;
+}
+
+.login-box{
+  flex: 0.7;
+    background-color: white;
+    border: 2px solid #06DAAE;
+    border-radius: 20px;
+    box-shadow: #06DAAE 0px 7px 27px 0px;
+    margin: 70px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #06DAAE;
+    font-weight: bolder;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    }
-    
-    .login-text {
-      font-size: 2vw;
-      padding-bottom: 20px;
-    }
-    
-    .login-box{
-      flex: 0.7;
-      background-color: white;
-      border-radius: 20px;
-      margin: 10px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: #63d7b0;
-      font-weight: bolder;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-    
-    .login-hyper {
-      color: darkviolet;
-      text-decoration: underline;
-      cursor: pointer;
-    }
+    gap: 20px;
+}
+
+
+
+.login-hyper {
+  color: darkviolet;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 7px; 
+}
+
+

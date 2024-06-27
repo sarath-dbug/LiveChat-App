@@ -1,6 +1,9 @@
-
+.dark {
+  background-color: #2d3941 !important;
+  color: lightgray !important;
+}
   
-  .chatArea-icon {
+.chatArea-icon {
     width: 1.25em !important;
     height: 1.25em !important;
   }

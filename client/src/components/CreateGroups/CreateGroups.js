@@ -90,11 +90,11 @@ function CreateGroups() {
         <input
           type="text"
           placeholder='Enter Gruop Name'
-          className={'search-box' + (lightTheme ? "" : " dark ")}
+          className={'createGroups-search-box' + (lightTheme ? "" : " dark ")}
           onChange={(e) => setGroupName(e.target.value)}
         />
         <IconButton
-          className={'icon' + (lightTheme ? "" : " dark ")}
+          className={'createGroups-icon' + (lightTheme ? "" : " dark ")}
           onClick={() => handleOpen()}
         >
           <DoneOutlineIcon />

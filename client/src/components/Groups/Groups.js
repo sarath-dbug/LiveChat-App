@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Groups.css';
-import logo from "../../assets/images/comments_512px.png";
+import logo from "../../assets/icons/comments_512px.png";
 import { IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from "@mui/icons-material/Refresh";

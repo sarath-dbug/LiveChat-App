@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../../assets/images/comments_512px.png";
+import "./Login.css"
+import logo from "../../assets/icons/comments_512px.png";
 import { Backdrop, CircularProgress, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import Toaster from '../Toaster/Toaster';
@@ -52,14 +52,15 @@ function Login() {
                 <CircularProgress color="secondary" />
             </Backdrop>
             <div className='login-container'>
-                <div className="image-container">
-                    <img src={logo} alt="Logo" className='welcome-logo' />
+                <div className="login-image-container">
+                    <img src={logo} alt="Logo" className='login-welcome-logo' />
                 </div>
                 <div className="login-box">
-                    <p className='login-text'>Login to your Account</p>
+                    <p className='login-text'>Login</p>
                     <TextField
                         onChange={changeHandler}
                         id="standard-basic"
+                        color="secondary" focused
                         label="Enter User Name"
                         variant="outlined"
                         name="name"
@@ -73,6 +74,7 @@ function Login() {
                     <TextField
                         onChange={changeHandler}
                         id="outlined-password-input"
+                        color="secondary" focused
                         label="Password"
                         type='password'
                         autoComplete="current-password"
@@ -89,7 +91,7 @@ function Login() {
                         variant="outlined">
                         Login
                     </Button>
-                    <p>Don't have an Account ? <Link className="hyper" to="/signup">Sign Up</Link></p>
+                    <p>Don't have an Account ? <Link className="login-hyper" to="/signup">Sign Up</Link></p>
                     {loginStatus ? (
                         <Toaster key={loginStatus.key} message={loginStatus.msg} />
                     ) : null}

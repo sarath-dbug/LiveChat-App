@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./Signup.css"
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../../assets/images/comments_512px.png";
+import logo from "../../assets/icons/comments_512px.png";
 import { Backdrop, CircularProgress, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import Toaster from '../Toaster/Toaster';
@@ -72,6 +72,7 @@ function Signup() {
                         onChange={changeHandler}
                         id="standard-basic"
                         label="Enter User Name"
+                        color="secondary" focused
                         name="name"
                         variant="outlined"
                         onKeyDown={(event) => {
@@ -85,6 +86,7 @@ function Signup() {
                         onChange={changeHandler}
                         id="outlined-email-input"
                         label="Email"
+                        color="secondary" focused
                         type='email'
                         autoComplete="email"
                         name="email"
@@ -99,6 +101,7 @@ function Signup() {
                     <TextField
                         onChange={changeHandler}
                         id="outlined-password-input"
+                        color="secondary" focused
                         label="Password"
                         type='password'
                         autoComplete="new-password"
@@ -111,6 +114,7 @@ function Signup() {
                             }
                         }}
                     />
+                    
                     <Button
                         onClick={signUpHandler}
                         variant="outlined">

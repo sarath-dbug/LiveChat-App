@@ -63,6 +63,24 @@
     border-radius: 10px;
     box-sizing: border-box;
   }
+
+
+  .sb-conversations {
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    flex: 1;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    margin: 10px;
+
+    overflow: scroll;
+    scrollbar-width: none;
+  }
+  
+  .sb-conversations::-webkit-scrollbar {
+    display: none;
+  }
   
 
   
@@ -81,7 +99,6 @@
     color: white;
     height: 48px;
     width: 48px;
-    padding: 2px;
   
     border-radius: 50%;
     justify-self: center;
@@ -127,9 +144,15 @@
       flex: 1;
       width: min-content;
     }
-
     .sb-container {
       flex: 0;
     }
+    .sb-other-icons {
+      flex-direction: column;
+    }
   
   }
+
+
+
+  
