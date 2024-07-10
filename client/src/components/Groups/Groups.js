@@ -17,6 +17,7 @@ function Groups() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [groups, setGroups] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     if (!userData) {
         navigate("/");
@@ -57,6 +58,10 @@ function Groups() {
         }).catch((error) => console.error("Error adding user to group:", error));
     };
 
+    const filteredGroups = groups.filter(group =>
+        group.chatName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <AnimatePresence>
             <motion.div
@@ -87,11 +92,17 @@ function Groups() {
                     <IconButton>
                         <SearchIcon className={"group-icon" + (lightTheme ? "" : " dark ")} />
                     </IconButton>
-                    <input type="text" placeholder='Search' className={"group-search-box" + (lightTheme ? "" : " dark ")} />
+                    <input
+                        type="text"
+                        placeholder='Search'
+                        className={"group-search-box" + (lightTheme ? "" : " dark ")}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
 
                 <div className="group-ug-list">
-                    {groups.map((group, index) => (
+                    {filteredGroups.map((group, index) => (
                         <motion.div
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.98 }}

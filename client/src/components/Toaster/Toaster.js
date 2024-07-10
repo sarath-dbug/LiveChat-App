@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import { Alert, IconButton, Snackbar } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
-function Toaster({message}) {
-    const [open, setOpen] = useState(true);
-    function handleClose(event, reason) {
-        if (reason === "clickaway") {
-          return;
-        }
-        setOpen(false);
-      }
+function Toaster({ message }) {
+  const [open, setOpen] = useState(true);
+  function handleClose(event, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  }
+
+  const color = message === "Updated User Profile" ? "success" : "warning";
   return (
     <div>
       <Snackbar
@@ -20,7 +22,7 @@ function Toaster({message}) {
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
-        variant="warning"
+        variant={color}
         ContentProps={{
           "aria-describedby": "message-id"
         }}
@@ -32,9 +34,9 @@ function Toaster({message}) {
         ]}
       >
 
-      <Alert onClose={handleClose} severity="warning" sx={{ width: '30vw' }}>
-      {message}
-      </Alert>
+        <Alert onClose={handleClose} severity={color} sx={{ width: '30vw' }}>
+          {message}
+        </Alert>
 
       </Snackbar>
     </div>

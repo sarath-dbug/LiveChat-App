@@ -10,22 +10,22 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
 import { IconButton } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../../features/themeSlice';
-import personImage5 from '../../assets/images/person5.jpg';
-import personImage6 from '../../assets/images/person6.jpg';
-import personImage7 from '../../assets/images/person7.jpg';
+import personImage from '../../assets/images/person.png';
+import groupsImage from '../../assets/images/groups.png';
 import axios from 'axios';
 
 function Sidebar() {
+  const userData = useMemo(() => JSON.parse(sessionStorage.getItem("userData")), []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const lightTheme = useSelector((state) => state.themeKey);
   const refresh = useSelector((state) => state.refreshKey);
   const [conversations, setConversations] = useState([]);
-  const userData = useMemo(() => JSON.parse(sessionStorage.getItem("userData")), []);
+  const [userProfile, setUserProfile] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(''); // Search query state
 
   useEffect(() => {
     if (!userData) {
@@ -50,9 +50,26 @@ function Sidebar() {
     fetchConversations();
   }, [refresh, userData, navigate]);
 
+  useEffect(() => {
+    if (conversations.length > 0) {
+      const userProfileData = conversations[0]?.users?.find(user => user._id === userData.data._id);
+      setUserProfile(userProfileData);
+    }
+  }, [conversations, userData]);
+
   if (!userData) {
-    return null; // or a loading spinner or some placeholder content
+    return null; 
   }
+
+  // Filter conversations based on search query
+  const filteredConversations = conversations.filter(conversation => {
+    if (conversation.isGroupChat) {
+      return conversation.chatName.toLowerCase().includes(searchQuery.toLowerCase());
+    } else {
+      const otherUser = conversation.users.find(user => user._id !== userData.data._id);
+      return otherUser ? otherUser.name.toLowerCase().includes(searchQuery.toLowerCase()) : false;
+    }
+  });
 
   return (
     <div className={"sb-container" + (lightTheme ? "" : " dark ")}>
@@ -81,8 +98,12 @@ function Sidebar() {
             <ExitToAppIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
 
-          <IconButton onClick={() => navigate('/app/welcome')}>
-            <Avatar className={"sb-icon" + (lightTheme ? "" : " dark ")} alt="Remy Sharp" src={personImage5} />
+          <IconButton onClick={() => navigate('/app/profile')}>
+            <Avatar
+              src={userProfile && userProfile.image ? `http://localhost:8080/Images/${userProfile.image}` : personImage}
+              className={"profile-sb-icon" + (lightTheme ? "" : " dark ")}
+              alt="Remy Sharp"
+            />
           </IconButton>
         </div>
       </div>
@@ -91,12 +112,17 @@ function Sidebar() {
         <IconButton>
           <SearchIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
         </IconButton>
-        <input type="text" placeholder='search' className={"sb-search-box" + (lightTheme ? "" : " dark ")} />
+        <input
+          type="text"
+          placeholder='search'
+          className={"sb-search-box" + (lightTheme ? "" : " dark ")}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+        />
       </div>
 
       <div className={"sb-conversations" + (lightTheme ? "" : " dark ")}>
-        {conversations.map((conversation, index) => {
-
+        {filteredConversations.map((conversation, index) => {
           if (conversation.isGroupChat) {
             const latestMessageContent = conversation.latestMessage ? conversation.latestMessage.content : 'No previous Messages, click here to start a new chat';
             const timeStamp = conversation.latestMessage ? new Date(conversation.latestMessage.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
@@ -105,8 +131,11 @@ function Sidebar() {
               <div className={'sb-conversation-container' + (lightTheme ? "" : " dark ")}
                 key={index}
                 onClick={() => navigate(`chat/${conversation._id}&${conversation.chatName}`)}>
-                {/* <p className='sb-con-icon'>{conversation.chatName[0]}</p> */}
-                <Avatar alt="Image" src={personImage7} className='sb-con-icon'/>
+                <Avatar
+                  src={conversation && conversation.image ? `http://localhost:8080/Images/${conversation.image}` : groupsImage}
+                  alt="Image"
+                  className='sb-con-icon'
+                />
                 <p className={'sb-con-title' + (lightTheme ? "" : " dark ")}>{conversation.chatName}</p>
                 <p className={"sb-con-lastMessage" + (lightTheme ? "" : " dark ")}>{latestMessageContent}</p>
                 <p className={'sb-con-timeStamp' + (lightTheme ? "" : " dark ")}>{timeStamp}</p>
@@ -118,13 +147,15 @@ function Sidebar() {
 
             const latestMessageContent = conversation.latestMessage ? conversation.latestMessage.content : 'No previous Messages, click here to start a new chat';
             const timeStamp = conversation.latestMessage ? new Date(conversation.latestMessage.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
-
             return (
               <div className={'sb-conversation-container' + (lightTheme ? "" : " dark ")}
                 key={index}
                 onClick={() => navigate(`chat/${conversation._id}&${otherUser.name}`)}>
-                {/* <p className='sb-con-icon'>{otherUser.name[0]}</p> */}
-                <Avatar alt="Image" src={personImage6} className='sb-con-icon'/>
+                <Avatar
+                  src={otherUser && otherUser.image ? `http://localhost:8080/Images/${otherUser.image}` : personImage}
+                  alt="Image"
+                  className='sb-con-icon'
+                />
                 <p className={'sb-con-title' + (lightTheme ? "" : " dark ")}>{otherUser.name}</p>
                 <p className={'sb-con-lastMessage' + (lightTheme ? "" : " dark ")}>{latestMessageContent}</p>
                 <p className={'sb-con-timeStamp' + (lightTheme ? "" : " dark ")}>{timeStamp}</p>

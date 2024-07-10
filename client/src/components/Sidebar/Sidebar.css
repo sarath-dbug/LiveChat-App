@@ -4,6 +4,11 @@
     width: 1.25em !important;
     height: 1.25em !important;
   }
+
+  .profile-sb-icon {
+    width: 1.50em !important;
+    height: 1.50em !important;
+  }
   
   .sb-other-icons {
     display: flex;

@@ -9,7 +9,7 @@ import Toaster from '../Toaster/Toaster';
 
 function Signup() {
 
-    const [data, setData] = useState({ name: "", email: "", password: "" });
+    const [data, setData] = useState({ name: "", email: "", mobile: "", password: "" });
     const [loading, setLoading] = useState(false);
 
 
@@ -41,14 +41,24 @@ function Signup() {
             setLoading(false);
 
         } catch (error) {
-            console.log(error.response.status);
+            if (error.response) {
+                const { status, data } = error.response;
 
-            if (error.response.status === 405) {
-                setSignupStatus({ msg: "User with this email ID already Exists", key: Math.random() });
+                if (status === 400) {
+                    setSignupStatus({ msg: data.message, key: Math.random() });
+                }
+
+                if (status === 409 && data.message.includes("email")) {
+                    setSignupStatus({ msg: "User with this email ID already exists", key: Math.random() });
+                }
+
+                if (status === 409 && data.message.includes("Username")) {
+                    setSignupStatus({ msg: "Username already taken, please choose another one", key: Math.random() });
+                }
+            } else {
+                setSignupStatus({ msg: "An unknown error occurred", key: Math.random() });
             }
-            if (error.response.status === 406) {
-                setSignupStatus({ msg: "User Name already Taken, Please take another one", key: Math.random() });
-            }
+
             setLoading(false);
         }
     };
@@ -100,6 +110,22 @@ function Signup() {
                     />
                     <TextField
                         onChange={changeHandler}
+                        id="outlined-mobile-input"
+                        color="secondary" focused
+                        label="Mobile"
+                        type='mobile'
+                        autoComplete="mobile"
+                        name="mobile"
+                        variant="outlined"
+                        onKeyDown={(event) => {
+                            if (event.code === "Enter") {
+                                // console.log(event);
+                                signUpHandler();
+                            }
+                        }}
+                    />
+                    <TextField
+                        onChange={changeHandler}
                         id="outlined-password-input"
                         color="secondary" focused
                         label="Password"
@@ -114,7 +140,7 @@ function Signup() {
                             }
                         }}
                     />
-                    
+
                     <Button
                         onClick={signUpHandler}
                         variant="outlined">

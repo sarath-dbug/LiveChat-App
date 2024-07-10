@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const dotenv = require('dotenv');
 const { default: mongoose } = require("mongoose");
 const cors = require("cors");
@@ -13,7 +14,17 @@ app.use(
 );
 
 dotenv.config();
+
+
+// Middleware to parse JSON bodies
 app.use(express.json());
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 const userRouter = require('./routes/userRoutes');
@@ -43,6 +54,7 @@ app.use('/message', messageRouter);
 // Error Handling middlewares
 app.use(notFound);
 app.use(errorHandler);
+
 
 
 const PORT = process.env.PORT || 4040

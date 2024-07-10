@@ -14,6 +14,7 @@ function Users() {
     const lightTheme = useSelector((state) => state.themeKey);
     const refresh = useSelector((state) => state.refreshKey);
     const [users, setUsers] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const userData = JSON.parse(sessionStorage.getItem("userData"));
     const dispatch = useDispatch();
     const nav = useNavigate();
@@ -47,6 +48,10 @@ function Users() {
             .catch((error) => console.error("Error creating chat:", error));
     };
 
+    const filteredUsers = users.filter(user =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <AnimatePresence>
             <motion.div
@@ -74,10 +79,16 @@ function Users() {
                     <IconButton>
                         <SearchIcon className={"user-icon" + (lightTheme ? "" : " dark ")} />
                     </IconButton>
-                    <input type="text" placeholder='Search' className={"user-search-box" + (lightTheme ? "" : " dark ")} />
+                    <input
+                        type="text"
+                        placeholder='Search'
+                        className={"user-search-box" + (lightTheme ? "" : " dark ")}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
                 <div className="user-ug-list">
-                    {users.map((user, index) => (
+                    {filteredUsers.map((user, index) => (
                         <motion.div
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.98 }}
