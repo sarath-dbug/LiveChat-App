@@ -155,6 +155,22 @@ const editProfile = expressAsyncHandler(async (req, res) => {
 });
 
 
+const fetchChatuser = expressAsyncHandler(async (req, res) => {
+    const { chat_userId } = req.params;
+
+    try {
+        const chatUser = await UserModel.findById(chat_userId);
+        if (!chatUser) {
+            res.status(404);
+            throw new Error('Chat user not found');
+        }
+        res.json(chatUser);
+    } catch (error) {
+        res.status(400);
+        throw new Error(error.message);
+    }
+});
+
 
 module.exports = {
     loginController,
@@ -162,5 +178,6 @@ module.exports = {
     fetchAllUsersController,
     imageUpload,
     userProfile,
-    editProfile
+    editProfile,
+    fetchChatuser
 }

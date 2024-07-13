@@ -9,6 +9,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { refreshSidebarFun } from '../../features/refreshSidebar';
+import personImage from '../../assets/images/person.png';
+import Avatar from '@mui/material/Avatar';
 
 function Users() {
     const lightTheme = useSelector((state) => state.themeKey);
@@ -96,7 +98,11 @@ function Users() {
                             key={index}
                             onClick={() => handleUserClick(user._id)}
                         >
-                            <p className="user-con-icon">{user.name[0]}</p>
+                            <Avatar
+                                src={user && user.image ? `http://localhost:8080/Images/${user.image}` : personImage}
+                                alt="Image"
+                                sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
+                            />
                             <p className={"user-con-title" + (lightTheme ? "" : " dark ")}>{user.name}</p>
                         </motion.div>
                     ))}

@@ -10,6 +10,7 @@ Router.post('/login', userController.loginController);
 Router.post('/register', userController.registerController);
 Router.post('/upload',upload.single('file'),userController.imageUpload);
 Router.post('/editUserProfile',userController.editProfile);
+Router.get('/fetchChatuser/:chat_userId',userController.fetchChatuser);
 Router.get('/fetchUserProfile', protect, userController.userProfile);
 Router.get('/fetchUsers', protect, userController.fetchAllUsersController);
 

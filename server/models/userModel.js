@@ -21,6 +21,10 @@ const userModel = mongoose.Schema({
     image: {
         type: String,
         default: ""   
+    },
+    is_online: {
+        type: Boolean,
+        default: false  
     }
 },
 {

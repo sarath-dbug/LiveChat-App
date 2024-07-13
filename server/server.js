@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const userModel = require("../server/models/userModel")
 
 const app = express()
 
@@ -30,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const userRouter = require('./routes/userRoutes');
 const chatRouter = require('./routes/chatRoutes');
 const messageRouter = require('./routes/messageRoutes');
-const { Socket } = require("socket.io");
+const { socket } = require("socket.io");
 
 const connectDB = async () => {
     try {
@@ -67,22 +68,33 @@ const io = require("socket.io")(server, {
     pingTimeout: 60000,
 });
 
+
+
 // Socket.io connection process
-io.on("connection", (Socket) => {
-    // console.log("Socket.io connection is established");
+io.on("connection", (socket) => {
+    socket.on("setup", async (user) => {
+        // Update user's online status to true
+        await userModel.findByIdAndUpdate(user.data._id, { is_online: true });
 
-    Socket.on("setup", (user) => {
-        Socket.join(user.data._id);
-        // console.log("server:// joined user: ", user.data._id);
-        Socket.emit("connected");
+        // Store user ID in the socket instance
+        socket.userId = user.data._id;
+
+        socket.join(user.data._id);
+        socket.emit("connected");
     });
 
-    Socket.on("join chat", (room) => {
-        Socket.join(room);
-        // console.log("user joined room: ", room);
+    socket.on("disconnect", async () => {
+        if (socket.userId) {
+            // Update user's online status to false
+            await userModel.findByIdAndUpdate(socket.userId, { is_online: false });
+        }
     });
 
-    Socket.on("new message", (newMessageStatus) => {
+    socket.on("join chat", (room) => {
+        socket.join(room);
+    });
+
+    socket.on("new message", (newMessageStatus) => {
         var chat = newMessageStatus.chat;
         if (!chat.users) {
             return console.log("chat.users not defined");
@@ -90,8 +102,9 @@ io.on("connection", (Socket) => {
         chat.users.forEach((user) => {
             if (user._id == newMessageStatus.sender._id) return;
 
-            Socket.in(user._id).emit("message received", newMessageStatus);
+            socket.in(user._id).emit("message received", newMessageStatus);
         });
     });
-}); 
+});
+
 

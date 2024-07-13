@@ -3,6 +3,8 @@ import "./ChatArea.css"
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
+import Avatar from '@mui/material/Avatar';
+import personImage from '../../assets/images/person.png';
 import MessageOthers from '../MessageOthers/MessageOthers';
 import MessageSelf from '../MessageSelf/MessageSelf';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,10 +23,12 @@ function ChatArea() {
   const dispatch = useDispatch();
   const [messageContent, setMessageContent] = useState('');
   const paramsId = useParams();
-  const [chat_id, chat_user] = paramsId._id.split('&');
+  const [chat_id, chat_userId] = paramsId._id.split('&');
   const userData = JSON.parse(sessionStorage.getItem('userData'));
   const [allMessages, setAllMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [chatuser, setChatUser] = useState();
+  console.log("chatuser : ", chatuser);
 
   // Function to send a message
   const sendMessage = () => {
@@ -92,6 +96,31 @@ function ChatArea() {
       });
   }, [refresh, chat_id, userData.data.token]);
 
+
+
+
+  useEffect(() => {
+    const fetchChatUser = async () => {
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+        const { data } = await axios.get(`http://localhost:8080/user/fetchChatuser/${chat_userId}`, config);
+        console.error('fetching chat user:', data);
+        setChatUser(data);
+      } catch (error) {
+        console.error('Error fetching chat user:', error);
+      }
+    };
+
+    fetchChatUser();
+  }, [chat_userId]); // Dependency array includes chat_userId
+
+
+
+
   if (!loading) {
     return (
       <div
@@ -127,11 +156,24 @@ function ChatArea() {
   } else {
     return (
       <div className={'chatArea-container' + (lightTheme ? '' : ' dark ')}>
+
         <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
-          <p className='chatArea-con-icon'>{chat_user[0]}</p>
-          <div className={'chatArea-header-text' + (lightTheme ? '' : ' dark ')}>
-            <p className={'chatArea-con-title' + (lightTheme ? '' : ' dark ')}>{chat_user}</p>
-          </div>
+          <Avatar
+            src={chatuser && chatuser.image ? `http://localhost:8080/Images/${chatuser.image}` : personImage}
+            alt="Remy Sharp"
+            sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
+
+          />
+          {
+            chatuser && (
+              <div className={'chatArea-header-text' + (lightTheme ? '' : ' dark ')}>
+                <p className={'chatArea-con-title' + (lightTheme ? '' : ' dark ')}>{chatuser.name}</p>
+                {chatuser.is_online ? (
+                  <p className="onlineStatus">online</p>
+                ) : null}
+              </div>
+            )
+          }
           <IconButton>
             <DeleteIcon className={'chatArea-icon' + (lightTheme ? '' : ' dark ')} />
           </IconButton>
@@ -174,6 +216,7 @@ function ChatArea() {
             <SendIcon />
           </IconButton>
         </div>
+
       </div>
     );
   }

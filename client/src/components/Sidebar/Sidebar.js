@@ -150,7 +150,7 @@ function Sidebar() {
             return (
               <div className={'sb-conversation-container' + (lightTheme ? "" : " dark ")}
                 key={index}
-                onClick={() => navigate(`chat/${conversation._id}&${otherUser.name}`)}>
+                onClick={() => navigate(`chat/${conversation._id}&${otherUser._id}`)}>
                 <Avatar
                   src={otherUser && otherUser.image ? `http://localhost:8080/Images/${otherUser.image}` : personImage}
                   alt="Image"
