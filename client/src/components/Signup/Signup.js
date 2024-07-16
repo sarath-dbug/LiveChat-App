@@ -5,22 +5,77 @@ import logo from "../../assets/icons/comments_512px.png";
 import { Backdrop, CircularProgress, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import Toaster from '../Toaster/Toaster';
+import { useGoogleLogin } from '@react-oauth/google';
+import GoogleIcon from "../../assets/icons/google.png";
 
 
 function Signup() {
 
     const [data, setData] = useState({ name: "", email: "", mobile: "", password: "" });
     const [loading, setLoading] = useState(false);
-
+    const navigator = useNavigate();
 
     const [signupStatus, setSignupStatus] = useState("");
     console.log(signupStatus);
+
 
     const changeHandler = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
 
-    const navigator = useNavigate();
+
+    const sign = useGoogleLogin({
+        onSuccess: async (response) => {
+            try {
+                const res = await axios.get(
+                    "https://www.googleapis.com/oauth2/v3/userinfo",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${response.access_token}`
+                        },
+                    }
+                );
+                const googleData = {
+                    name: res.data.name,
+                    email: res.data.email,
+                    mobile: "0123456789",
+                    password: "Google0auth*",
+                    googleSign: true
+                };
+                googleSignUpHandler(googleData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    });
+
+    const googleSignUpHandler = async (googleData) => {
+        setLoading(true);
+        try {
+            const config = {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            };
+            const response = await axios.post(
+                "http://localhost:8080/user/register/",
+                googleData,
+                config
+            );
+            setSignupStatus({ msg: "Success", key: Math.random() });
+            navigator("/app/welcome");
+            sessionStorage.setItem("userData", JSON.stringify(response));
+            setLoading(false);
+
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    };
+
+
+
+
 
     const signUpHandler = async () => {
         setLoading(true);
@@ -82,7 +137,6 @@ function Signup() {
                         onChange={changeHandler}
                         id="standard-basic"
                         label="Enter User Name"
-                        color="secondary" focused
                         name="name"
                         variant="outlined"
                         onKeyDown={(event) => {
@@ -96,7 +150,6 @@ function Signup() {
                         onChange={changeHandler}
                         id="outlined-email-input"
                         label="Email"
-                        color="secondary" focused
                         type='email'
                         autoComplete="email"
                         name="email"
@@ -111,7 +164,6 @@ function Signup() {
                     <TextField
                         onChange={changeHandler}
                         id="outlined-mobile-input"
-                        color="secondary" focused
                         label="Mobile"
                         type='mobile'
                         autoComplete="mobile"
@@ -127,7 +179,6 @@ function Signup() {
                     <TextField
                         onChange={changeHandler}
                         id="outlined-password-input"
-                        color="secondary" focused
                         label="Password"
                         type='password'
                         autoComplete="new-password"
@@ -145,6 +196,15 @@ function Signup() {
                         onClick={signUpHandler}
                         variant="outlined">
                         Sign Up
+                    </Button>
+                    <Button
+                        onClick={() => sign()}
+                        variant="outlined"
+                        className="google-button"
+                        style={{ textTransform: 'none' }}
+                    >
+                        <img src={GoogleIcon} alt="Logo" className="google-icon" />
+                        Sign up with Google
                     </Button>
                     <p>
                         Already have an Account ?

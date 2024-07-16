@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Avatar from '@mui/material/Avatar';
 import personImage from '../../assets/images/person.png';
+import groupsImage from '../../assets/images/groups.png';
 import MessageOthers from '../MessageOthers/MessageOthers';
 import MessageSelf from '../MessageSelf/MessageSelf';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,8 +23,12 @@ function ChatArea() {
   const refresh = useSelector((state) => state.refreshKey);
   const dispatch = useDispatch();
   const [messageContent, setMessageContent] = useState('');
+
   const paramsId = useParams();
   const [chat_id, chat_userId] = paramsId._id.split('&');
+  const isName = /[^\da-fA-F]/.test(chat_userId); //check group chat or not
+  let group_name =chat_userId.replace(/^"|"$/g, ''); // if group _chat Remove " " marks if they exist
+ 
   const userData = JSON.parse(sessionStorage.getItem('userData'));
   const [allMessages, setAllMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -157,27 +162,38 @@ function ChatArea() {
     return (
       <div className={'chatArea-container' + (lightTheme ? '' : ' dark ')}>
 
-        <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
-          <Avatar
-            src={chatuser && chatuser.image ? `http://localhost:8080/Images/${chatuser.image}` : personImage}
-            alt="Remy Sharp"
-            sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
-
-          />
-          {
-            chatuser && (
+        { !isName ? (
+          <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
+            <Avatar
+              src={chatuser && chatuser.image ? `http://localhost:8080/Images/${chatuser.image}` : personImage}
+              alt="Remy Sharp"
+              sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
+            />
+            {chatuser && (
               <div className={'chatArea-header-text' + (lightTheme ? '' : ' dark ')}>
                 <p className={'chatArea-con-title' + (lightTheme ? '' : ' dark ')}>{chatuser.name}</p>
-                {chatuser.is_online ? (
-                  <p className="onlineStatus">online</p>
-                ) : null}
+                {chatuser.is_online && <p className="onlineStatus">online</p>}
               </div>
-            )
-          }
-          <IconButton>
-            <DeleteIcon className={'chatArea-icon' + (lightTheme ? '' : ' dark ')} />
-          </IconButton>
-        </div>
+            )}
+            <IconButton>
+              <DeleteIcon className={'chatArea-icon' + (lightTheme ? '' : ' dark ')} />
+            </IconButton>
+          </div>
+        ) : (
+          <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
+            <Avatar
+              src={groupsImage}
+              alt="Remy Sharp"
+              sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
+            />
+            <div className={'chatArea-header-text' + (lightTheme ? '' : ' dark ')}>
+              <p className={'chatArea-con-title' + (lightTheme ? '' : ' dark ')}>{group_name}</p>
+            </div>
+            <IconButton>
+              <DeleteIcon className={'chatArea-icon' + (lightTheme ? '' : ' dark ')} />
+            </IconButton>
+          </div>
+        )}
 
         <div className={'chatArea-messages-container' + (lightTheme ? '' : ' dark ')}>
           {allMessages

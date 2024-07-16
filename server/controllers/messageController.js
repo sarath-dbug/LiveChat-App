@@ -23,12 +23,12 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
         var message = await MessageModel.create(newMessage);
 
         message = await MessageModel.findById(message._id)
-            .populate("sender", "name pic")
+            .populate("sender", "name image")
             .populate("chat")
             .populate("reciever");
         message = await UserModel.populate(message, {
             path: "chat.users",
-            select: "name email"
+            select: "name email image"
         });
         await ChatModel.findByIdAndUpdate(chatId, { latestMessage: message });
         res.json(message);
@@ -43,7 +43,7 @@ const allMessages = expressAsyncHandler(async (req, res) => {
     const chat_id = req.params.chatId
     try {
         const messages = await MessageModel.find({ chat: chat_id })
-            .populate("sender", "name email")
+            .populate("sender", "name email image")
             .populate("reciever")
             .populate("chat");
             res.json(messages);

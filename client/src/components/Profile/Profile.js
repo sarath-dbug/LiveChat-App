@@ -12,12 +12,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import Toaster from '../Toaster/Toaster';
+import { useSelector } from 'react-redux';
 
 
 const Profile = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+  const lightTheme = useSelector((state) => state.themeKey);
   const [open, setOpen] = React.useState(false);
   const [data, setData] = useState({ name: "", email: "", mobile: "" });
   const [loading, setLoading] = useState(false);
@@ -132,7 +134,6 @@ const Profile = () => {
     setOpen(false);
   };
 
-
   return (
     <>
       <Backdrop
@@ -141,14 +142,14 @@ const Profile = () => {
       >
         <CircularProgress color="secondary" />
       </Backdrop>
-      <div className="profile-container">
-        <div className="profile-box">
-          <div className="profile-controls">
-            <div className="profile-image-box">
+      <div className={"profile-container" + (lightTheme ? "" : " dark ")}>
+        <div className={"profile-box" + (lightTheme ? "" : " dark ")}>
+          <div className={"profile-controls" + (lightTheme ? "" : " dark ")}>
+            <div className={"profile-image-box" + (lightTheme ? "" : " dark ")}>
               <img
                 src={userProfile && userProfile.image ? `http://localhost:8080/Images/${userProfile.image}` : personImage}
                 alt=""
-                className='profile-image'
+                className={'profile-image' + (lightTheme ? "" : " dark ")}
               />
               <input type="file" id="file-input" onChange={handleFileChange} style={{ display: 'none' }} />
               <label htmlFor="file-input">
@@ -156,13 +157,13 @@ const Profile = () => {
                   component="span"
                   variant="contained"
                   startIcon={<CloudUploadIcon />}
-                  className="upload-button"
+                  className={"upload-button" + (lightTheme ? "" : " dark ")}
                 >
                   Upload File
                 </Button>
               </label>
               {selectedFile && (
-                <Typography variant="body1" component="p" className="file-selected-text">
+                <Typography variant="body1" component="p" className={"file-selected-text" + (lightTheme ? "" : " dark ")}>
                   File selected: {selectedFile.name}
                 </Typography>
               )}
@@ -171,18 +172,18 @@ const Profile = () => {
               </Button>
             </div>
           </div>
-          <div className="user-profile-list">
-            <Typography variant="body1" component="div" className="profile-list-item">
-              <span className="profile-list-label">Name:</span> {userProfile ? userProfile.name : userData.data.name}
+          <div className={"user-profile-list" + (lightTheme ? "" : " dark ")}>
+            <Typography variant="body1" component="div" className={"profile-list-item" + (lightTheme ? "" : " dark ")}>
+              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Name:</span> {userProfile ? userProfile.name : userData.data.name}
             </Typography>
-            <Typography variant="body1" component="div" className="profile-list-item">
-              <span className="profile-list-label">Email:</span> {userProfile ? userProfile.email : userData.data.email}
+            <Typography variant="body1" component="div" className={"profile-list-item" + (lightTheme ? "" : " dark ")}>
+              <span className={ "profile-list-label"+ (lightTheme ? "" : " dark ")}>Email:</span> {userProfile ? userProfile.email : userData.data.email}
             </Typography>
-            <Typography variant="body1" component="div" className="profile-list-item">
-              <span className="profile-list-label">Mobile:</span> {userProfile ? userProfile.mobile : userData.data.mobile}
+            <Typography variant="body1" component="div" className={ "profile-list-item"+ (lightTheme ? "" : " dark ")}>
+              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Mobile:</span> {userProfile ? userProfile.mobile : userData.data.mobile}
             </Typography>
-            <Typography variant="body1" component="div" className="profile-list-item">
-              <span className="profile-list-label">Edit Info:</span>
+            <Typography variant="body1" component="div" className={"profile-list-item" + (lightTheme ? "" : " dark ")}>
+              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Edit Info:</span>
               <Button onClick={handleClickOpen}>
                 <EditNoteOutlinedIcon style={{ color: 'black', marginLeft: '-30px', fontSize: '32px' }} />
               </Button>

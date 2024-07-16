@@ -71,3 +71,42 @@
   font-weight: bold;
   margin-right: 10px;
 }
+
+
+
+/* Media Query */
+@media only screen and (max-width: 40em) {
+  .profile-container {
+    width: 100vw;
+    height: auto;
+    padding: 10px;
+  }
+
+  .profile-box {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .profile-controls, .user-profile-list {
+    width: 100%;
+  }
+
+  .profile-image-box {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .upload-button, .file-selected-text {
+    margin-top: 5px;
+  }
+
+  .user-profile-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}

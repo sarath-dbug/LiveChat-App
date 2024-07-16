@@ -72,7 +72,7 @@ function Sidebar() {
   });
 
   return (
-    <div className={"sb-container" + (lightTheme ? "" : " dark ")}>
+    <div className="sb-container">
       <div className={"sb-header" + (lightTheme ? "" : " dark ")}>
         <div className='sb-other-icons'>
           <IconButton onClick={() => navigate('/app/welcome')}>
@@ -130,7 +130,7 @@ function Sidebar() {
             return (
               <div className={'sb-conversation-container' + (lightTheme ? "" : " dark ")}
                 key={index}
-                onClick={() => navigate(`chat/${conversation._id}&${conversation.chatName}`)}>
+                onClick={() => navigate(`chat/${conversation._id}&"${conversation.chatName}"`)}>  
                 <Avatar
                   src={conversation && conversation.image ? `http://localhost:8080/Images/${conversation.image}` : groupsImage}
                   alt="Image"

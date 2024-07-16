@@ -29,45 +29,78 @@ const loginController = expressAsyncHandler(async (req, res) => {
 //Register
 const registerController = expressAsyncHandler(async (req, res) => {
 
-    const { name, email, password, mobile } = req.body;
+    const { name, email, password, mobile, googleSign } = req.body;
 
-    try {
-        // Validate input fields
-        validateFields({ name, email, password, mobile });
+    if (googleSign) {
 
         // Check if the user already exists
-        const userEmailExist = await UserModel.findOne({ email });
-        if (userEmailExist) {
-            res.status(409).json({ message: 'User with this email ID already exists' });
-            return;
-        }
-
-        // Check if the username is already taken
-        const userNameExist = await UserModel.findOne({ name });
-        if (userNameExist) {
-            res.status(409).json({ message: 'Username already taken, please choose another one' });
-            return;
-        }
-
-        //craete an entry in the DB
-        const user = await UserModel.create({ name, email, password, mobile });
+        const user = await UserModel.findOne({ email });
         if (user) {
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                mobile: user.mobile,
                 isAdmin: user.isAdmin,
                 token: generateToken(user._id)
             });
         } else {
-            res.status(404);
-            throw new Error('Registration Error')
+            //craete an entry in the DB
+            const user = await UserModel.create({ name, email, password, mobile });
+            if (user) {
+                res.status(201).json({
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    mobile: user.mobile,
+                    isAdmin: user.isAdmin,
+                    token: generateToken(user._id)
+                });
+            } else {
+                res.status(404);
+                throw new Error('Registration Error')
+            }
+            res.status(201).json({ message: 'User created successfully' });
         }
 
-        res.status(201).json({ message: 'User created successfully' });
-    } catch (error) {
-        res.status(error.status || 500).json({ message: error.message || 'Internal Server Error' });
+    } else {
+        try {
+            // Validate input fields
+            validateFields({ name, email, password, mobile });
+
+            // Check if the user already exists
+            const userEmailExist = await UserModel.findOne({ email });
+            if (userEmailExist) {
+                res.status(409).json({ message: 'User with this email ID already exists' });
+                return;
+            }
+
+            // Check if the username is already taken
+            const userNameExist = await UserModel.findOne({ name });
+            if (userNameExist) {
+                res.status(409).json({ message: 'Username already taken, please choose another one' });
+                return;
+            }
+
+            //craete an entry in the DB
+            const user = await UserModel.create({ name, email, password, mobile });
+            if (user) {
+                res.status(201).json({
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    mobile: user.mobile,
+                    isAdmin: user.isAdmin,
+                    token: generateToken(user._id)
+                });
+            } else {
+                res.status(404);
+                throw new Error('Registration Error')
+            }
+
+            res.status(201).json({ message: 'User created successfully' });
+        } catch (error) {
+            res.status(error.status || 500).json({ message: error.message || 'Internal Server Error' });
+        }
     }
 });
 
