@@ -4,5 +4,9 @@ node_modules
 # Environment variables file
 .env
 
-# Ignore images in the public/images directory
-public/Images/
+# Ignore all image files in public/Images directory
+public/Images/*.jpeg
+public/Images/*.jpg
+public/Images/*.webp
+public/Images/*.avif
+public/Images/*.png
