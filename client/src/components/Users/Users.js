@@ -12,6 +12,7 @@ import { refreshSidebarFun } from '../../features/refreshSidebar';
 import personImage from '../../assets/images/person.png';
 import Avatar from '@mui/material/Avatar';
 
+
 function Users() {
     const lightTheme = useSelector((state) => state.themeKey);
     const refresh = useSelector((state) => state.refreshKey);
@@ -54,6 +55,8 @@ function Users() {
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+
+
     return (
         <AnimatePresence>
             <motion.div
@@ -64,10 +67,16 @@ function Users() {
                     ease: "anticipate",
                     duration: "0.3"
                 }}
-                className='user-list-container'>
+                className='user-list-container'
+            >
+
                 <div className={"user-ug-header" + (lightTheme ? "" : " dark ")}>
                     <img src={logo}
-                        style={{ height: "2rem", width: "2rem", marginLeft: "10px" }}
+                        style={{
+                            height: "2rem",
+                            width: "2rem",
+                            marginLeft: "10px"
+                        }}
                     />
                     <p className={"user-ug-title" + (lightTheme ? "" : " dark ")}>Available Users</p>
                     <IconButton
@@ -77,6 +86,7 @@ function Users() {
                         <RefreshIcon />
                     </IconButton>
                 </div>
+
                 <div className={"user-sb-search" + (lightTheme ? "" : " dark ")}>
                     <IconButton>
                         <SearchIcon className={"user-icon" + (lightTheme ? "" : " dark ")} />
@@ -89,6 +99,7 @@ function Users() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
+
                 <div className="user-ug-list">
                     {filteredUsers.map((user, index) => (
                         <motion.div
@@ -101,12 +112,18 @@ function Users() {
                             <Avatar
                                 src={user && user.image ? `http://localhost:8080/Images/${user.image}` : personImage}
                                 alt="Image"
-                                sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
+                                sx={{
+                                    width: 50,
+                                    height: 50,
+                                    marginLeft: 2,
+                                    marginRight: 1
+                                }}
                             />
                             <p className={"user-con-title" + (lightTheme ? "" : " dark ")}>{user.name}</p>
                         </motion.div>
                     ))}
                 </div>
+
             </motion.div>
         </AnimatePresence>
     );

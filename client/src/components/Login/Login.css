@@ -1,10 +1,8 @@
-
-.login-welcome-logo{
-height: 20vw;
+.login-welcome-logo {
+  height: 20vw;
 }
 
-
-.login-container{
+.login-container {
   height: 90vh;
   width: 90vw;
   background-color: #f4f5f8;
@@ -13,12 +11,11 @@ height: 20vw;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-
-.login-image-container{
-flex: 0.3;
-display: flex;
-justify-content: center;
-align-items: center;
+.login-image-container {
+  flex: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-text {
@@ -26,32 +23,29 @@ align-items: center;
   padding-bottom: 20px;
 }
 
-.login-box{
+.login-box {
   flex: 0.7;
-    background-color: white;
-    border: 2px solid #06DAAE;
-    border-radius: 20px;
-    box-shadow: #06DAAE 0px 7px 27px 0px;
-    margin: 70px;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #06DAAE;
-    font-weight: bolder;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  background-color: white;
+  border: 2px solid #06daae;
+  border-radius: 20px;
+  box-shadow: #06daae 0px 7px 27px 0px;
+  margin: 70px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #06daae;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
-
-
 
 .login-hyper {
   color: darkviolet;
   text-decoration: underline;
   cursor: pointer;
-  margin-left: 7px; 
+  margin-left: 7px;
 }
-
 
 .google-button {
   display: flex;
@@ -60,15 +54,14 @@ align-items: center;
 }
 
 .google-button:hover {
-  background-color: #357ae8; 
+  background-color: #357ae8;
 }
 
 .google-icon {
-  margin-right: 8px; 
+  margin-right: 8px;
   width: 20px;
   height: auto;
 }
-
 
 
 /* Media Query */
@@ -81,7 +74,7 @@ align-items: center;
     border-radius: 0;
   }
 
-.login-box {
+  .login-box {
     margin: auto;
     width: 90%;
     padding: 18px;

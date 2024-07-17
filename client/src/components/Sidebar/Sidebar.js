@@ -27,11 +27,13 @@ function Sidebar() {
   const [userProfile, setUserProfile] = useState([]);
   const [searchQuery, setSearchQuery] = useState(''); // Search query state
 
+
   useEffect(() => {
     if (!userData) {
       navigate("/");
       return;
     }
+
 
     const fetchConversations = async () => {
       try {
@@ -50,6 +52,7 @@ function Sidebar() {
     fetchConversations();
   }, [refresh, userData, navigate]);
 
+
   useEffect(() => {
     if (conversations.length > 0) {
       const userProfileData = conversations[0]?.users?.find(user => user._id === userData.data._id);
@@ -58,8 +61,9 @@ function Sidebar() {
   }, [conversations, userData]);
 
   if (!userData) {
-    return null; 
+    return null;
   }
+
 
   // Filter conversations based on search query
   const filteredConversations = conversations.filter(conversation => {
@@ -71,6 +75,8 @@ function Sidebar() {
     }
   });
 
+
+
   return (
     <div className="sb-container">
       <div className={"sb-header" + (lightTheme ? "" : " dark ")}>
@@ -78,17 +84,22 @@ function Sidebar() {
           <IconButton onClick={() => navigate('/app/welcome')}>
             <HomeIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
+
           <IconButton onClick={() => navigate('users')}>
             <PersonAddIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
+
           <IconButton onClick={() => navigate('groups')}>
             <GroupAddIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
+
           <IconButton onClick={() => navigate('create-groups')}>
             <AddCircleIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} />
           </IconButton>
+
           <IconButton onClick={() => dispatch(toggleTheme())}>
-            {lightTheme ? <NightlightIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} /> : <LightModeIcon className={"icon" + (lightTheme ? "" : " dark ")} />}
+            {lightTheme ? <NightlightIcon className={"sb-icon" + (lightTheme ? "" : " dark ")} /> :
+              <LightModeIcon className={"icon" + (lightTheme ? "" : " dark ")} />}
           </IconButton>
 
           <IconButton onClick={() => {
@@ -117,7 +128,7 @@ function Sidebar() {
           placeholder='search'
           className={"sb-search-box" + (lightTheme ? "" : " dark ")}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
@@ -130,7 +141,7 @@ function Sidebar() {
             return (
               <div className={'sb-conversation-container' + (lightTheme ? "" : " dark ")}
                 key={index}
-                onClick={() => navigate(`chat/${conversation._id}&"${conversation.chatName}"`)}>  
+                onClick={() => navigate(`chat/${conversation._id}&"${conversation.chatName}"`)}>
                 <Avatar
                   src={conversation && conversation.image ? `http://localhost:8080/Images/${conversation.image}` : groupsImage}
                   alt="Image"
@@ -141,12 +152,13 @@ function Sidebar() {
                 <p className={'sb-con-timeStamp' + (lightTheme ? "" : " dark ")}>{timeStamp}</p>
               </div>
             );
+
           } else {
             const otherUser = conversation.users.find(user => user._id !== userData.data._id);
             if (!otherUser) return null;
-
             const latestMessageContent = conversation.latestMessage ? conversation.latestMessage.content : 'No previous Messages, click here to start a new chat';
             const timeStamp = conversation.latestMessage ? new Date(conversation.latestMessage.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+
             return (
               <div className={'sb-conversation-container' + (lightTheme ? "" : " dark ")}
                 key={index}
@@ -161,6 +173,7 @@ function Sidebar() {
                 <p className={'sb-con-timeStamp' + (lightTheme ? "" : " dark ")}>{timeStamp}</p>
               </div>
             );
+
           }
         })}
       </div>

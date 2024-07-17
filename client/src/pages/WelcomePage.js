@@ -9,4 +9,4 @@ function Welcomepages() {
   )
 }
 
-export default Welcomepages
+export default Welcomepages;

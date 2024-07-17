@@ -30,7 +30,7 @@ function CreateGroups() {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const handleOpen = () => {
     setOpen(true);
   };

@@ -14,15 +14,11 @@ function Signup() {
     const [data, setData] = useState({ name: "", email: "", mobile: "", password: "" });
     const [loading, setLoading] = useState(false);
     const navigator = useNavigate();
-
     const [signupStatus, setSignupStatus] = useState("");
-    console.log(signupStatus);
-
 
     const changeHandler = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
-
 
     const sign = useGoogleLogin({
         onSuccess: async (response) => {
@@ -73,10 +69,6 @@ function Signup() {
         }
     };
 
-
-
-
-
     const signUpHandler = async () => {
         setLoading(true);
         try {
@@ -94,7 +86,6 @@ function Signup() {
             navigator("/app/welcome");
             sessionStorage.setItem("userData", JSON.stringify(response));
             setLoading(false);
-
         } catch (error) {
             if (error.response) {
                 const { status, data } = error.response;
@@ -113,7 +104,6 @@ function Signup() {
             } else {
                 setSignupStatus({ msg: "An unknown error occurred", key: Math.random() });
             }
-
             setLoading(false);
         }
     };
@@ -129,7 +119,11 @@ function Signup() {
             </Backdrop>
             <div className='signup-container'>
                 <div className="signup-image-container">
-                    <img src={logo} alt="Logo" className='signup-welcome-logo' />
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className='signup-welcome-logo'
+                    />
                 </div>
                 <div className="signup-box">
                     <p className='signup-text'>Create an Account</p>
@@ -141,7 +135,6 @@ function Signup() {
                         variant="outlined"
                         onKeyDown={(event) => {
                             if (event.code === "Enter") {
-                                // console.log(event);
                                 signUpHandler();
                             }
                         }}
@@ -156,7 +149,6 @@ function Signup() {
                         variant="outlined"
                         onKeyDown={(event) => {
                             if (event.code === "Enter") {
-                                // console.log(event);
                                 signUpHandler();
                             }
                         }}
@@ -171,7 +163,6 @@ function Signup() {
                         variant="outlined"
                         onKeyDown={(event) => {
                             if (event.code === "Enter") {
-                                // console.log(event);
                                 signUpHandler();
                             }
                         }}
@@ -186,7 +177,6 @@ function Signup() {
                         variant="outlined"
                         onKeyDown={(event) => {
                             if (event.code === "Enter") {
-                                // console.log(event);
                                 signUpHandler();
                             }
                         }}
@@ -197,6 +187,7 @@ function Signup() {
                         variant="outlined">
                         Sign Up
                     </Button>
+
                     <Button
                         onClick={() => sign()}
                         variant="outlined"
@@ -206,10 +197,12 @@ function Signup() {
                         <img src={GoogleIcon} alt="Logo" className="google-icon" />
                         Sign up with Google
                     </Button>
+
                     <p>
                         Already have an Account ?
                         <Link className="signup-hyper" to="/">Login</Link>
                     </p>
+
                     {signupStatus ? (
                         <Toaster key={signupStatus.key} message={signupStatus.msg} />
                     ) : null}

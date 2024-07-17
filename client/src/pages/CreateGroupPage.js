@@ -9,4 +9,4 @@ function CreateGroupPage() {
   )
 }
 
-export default CreateGroupPage
+export default CreateGroupPage;

@@ -27,8 +27,8 @@ function ChatArea() {
   const paramsId = useParams();
   const [chat_id, chat_userId] = paramsId._id.split('&');
   const isName = /[^\da-fA-F]/.test(chat_userId); //check group chat or not
-  let group_name =chat_userId.replace(/^"|"$/g, ''); // if group _chat Remove " " marks if they exist
- 
+  let group_name = chat_userId.replace(/^"|"$/g, ''); // if group _chat Remove " " marks if they exist
+
   const userData = JSON.parse(sessionStorage.getItem('userData'));
   const [allMessages, setAllMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -102,8 +102,6 @@ function ChatArea() {
   }, [refresh, chat_id, userData.data.token]);
 
 
-
-
   useEffect(() => {
     const fetchChatUser = async () => {
       try {
@@ -121,8 +119,7 @@ function ChatArea() {
     };
 
     fetchChatUser();
-  }, [chat_userId]); // Dependency array includes chat_userId
-
+  }, [chat_userId]);
 
 
 
@@ -161,8 +158,7 @@ function ChatArea() {
   } else {
     return (
       <div className={'chatArea-container' + (lightTheme ? '' : ' dark ')}>
-
-        { !isName ? (
+        {!isName ? (
           <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
             <Avatar
               src={chatuser && chatuser.image ? `http://localhost:8080/Images/${chatuser.image}` : personImage}
@@ -209,7 +205,6 @@ function ChatArea() {
               }
             })}
         </div>
-
         <div className={'chatArea-text-input-area' + (lightTheme ? '' : ' dark ')}>
           <input
             type='text'
@@ -232,7 +227,6 @@ function ChatArea() {
             <SendIcon />
           </IconButton>
         </div>
-
       </div>
     );
   }

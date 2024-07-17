@@ -62,6 +62,7 @@ function Groups() {
         group.chatName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+
     return (
         <AnimatePresence>
             <motion.div
@@ -74,7 +75,8 @@ function Groups() {
                 }}
                 className='group-list-container'>
                 <div className={"group-ug-header" + (lightTheme ? "" : " dark ")}>
-                    <img src={logo}
+                    <img
+                        src={logo}
                         style={{ height: "2rem", width: "2rem", marginLeft: "10px" }}
                     />
                     <p className={"group-ug-title" + (lightTheme ? "" : " dark ")}>Available Groups</p>

@@ -29,8 +29,6 @@ const Profile = () => {
   const [updateStatus, setUpdateStatus] = useState("");
 
 
-
-
   const nav = useNavigate();
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem("userData"));
@@ -59,14 +57,12 @@ const Profile = () => {
   }
 
 
-
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
 
 
   const userId = userData.data._id;
-
   const handleUpload = async () => {
     setLoading(true);
     const formData = new FormData();
@@ -76,7 +72,6 @@ const Profile = () => {
     try {
       const response = await axios.post("http://localhost:8080/user/upload", formData);
       setUpdateStatus({ msg: "Updated User Profile", key: Math.random() })
-      // Assuming response contains updated user profile
       setUserProfile(response.data);
       sessionStorage.setItem("userProfile", JSON.stringify(response.data));
       setSelectedFile(null);
@@ -86,7 +81,6 @@ const Profile = () => {
       setLoading(false);
     }
   };
-
 
 
   const saveHandler = async () => {
@@ -134,6 +128,7 @@ const Profile = () => {
     setOpen(false);
   };
 
+
   return (
     <>
       <Backdrop
@@ -151,7 +146,12 @@ const Profile = () => {
                 alt=""
                 className={'profile-image' + (lightTheme ? "" : " dark ")}
               />
-              <input type="file" id="file-input" onChange={handleFileChange} style={{ display: 'none' }} />
+              <input
+                type="file"
+                id="file-input"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
               <label htmlFor="file-input">
                 <Button
                   component="span"
@@ -163,30 +163,69 @@ const Profile = () => {
                 </Button>
               </label>
               {selectedFile && (
-                <Typography variant="body1" component="p" className={"file-selected-text" + (lightTheme ? "" : " dark ")}>
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={"file-selected-text" + (lightTheme ? "" : " dark ")}
+                >
                   File selected: {selectedFile.name}
                 </Typography>
               )}
-              <Button variant="contained" color="primary" onClick={handleUpload} disabled={!selectedFile}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleUpload}
+                disabled={!selectedFile}
+              >
                 Submit
               </Button>
             </div>
           </div>
           <div className={"user-profile-list" + (lightTheme ? "" : " dark ")}>
-            <Typography variant="body1" component="div" className={"profile-list-item" + (lightTheme ? "" : " dark ")}>
-              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Name:</span> {userProfile ? userProfile.name : userData.data.name}
+            <Typography
+              variant="body1"
+              component="div"
+              className={"profile-list-item" + (lightTheme ? "" : " dark ")}
+            >
+              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Name:</span>
+              {userProfile ? userProfile.name : userData.data.name}
             </Typography>
-            <Typography variant="body1" component="div" className={"profile-list-item" + (lightTheme ? "" : " dark ")}>
-              <span className={ "profile-list-label"+ (lightTheme ? "" : " dark ")}>Email:</span> {userProfile ? userProfile.email : userData.data.email}
+
+            <Typography
+              variant="body1"
+              component="div"
+              className={"profile-list-item" + (lightTheme ? "" : " dark ")}
+            >
+              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Email:</span>
+              {userProfile ? userProfile.email : userData.data.email}
             </Typography>
-            <Typography variant="body1" component="div" className={ "profile-list-item"+ (lightTheme ? "" : " dark ")}>
-              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Mobile:</span> {userProfile ? userProfile.mobile : userData.data.mobile}
+
+            <Typography
+              variant="body1"
+              component="div"
+              className={"profile-list-item" + (lightTheme ? "" : " dark ")}
+            >
+              <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Mobile:</span>
+              {userProfile ? userProfile.mobile : userData.data.mobile}
             </Typography>
-            <Typography variant="body1" component="div" className={"profile-list-item" + (lightTheme ? "" : " dark ")}>
+
+            <Typography
+              variant="body1"
+              component="div"
+              className={"profile-list-item" + (lightTheme ? "" : " dark ")}
+            >
               <span className={"profile-list-label" + (lightTheme ? "" : " dark ")}>Edit Info:</span>
+
               <Button onClick={handleClickOpen}>
-                <EditNoteOutlinedIcon style={{ color: 'black', marginLeft: '-30px', fontSize: '32px' }} />
+                <EditNoteOutlinedIcon
+                  style={{
+                    color: 'black',
+                    marginLeft: '-30px',
+                    fontSize: '32px'
+                  }}
+                />
               </Button>
+
               <Dialog
                 open={open}
                 onClose={handleClose}
@@ -194,7 +233,11 @@ const Profile = () => {
                   component: 'form',
                 }}
               >
-                <DialogTitle>Edit Profile</DialogTitle>
+
+                <DialogTitle>
+                  Edit Profile
+                </DialogTitle>
+
                 <DialogContent>
                   <TextField
                     onChange={changeHandler}
@@ -233,6 +276,7 @@ const Profile = () => {
                     variant="standard"
                   />
                 </DialogContent>
+
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
                   <Button onClick={saveHandler} type="submit">Save</Button>
@@ -240,9 +284,11 @@ const Profile = () => {
 
               </Dialog>
             </Typography>
+
             {updateStatus ? (
               <Toaster key={updateStatus.key} message={updateStatus.msg} />
             ) : null}
+
           </div>
         </div>
       </div>

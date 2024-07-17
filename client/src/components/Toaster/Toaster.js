@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Alert, IconButton, Snackbar } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
+
 function Toaster({ message }) {
   const [open, setOpen] = useState(true);
   function handleClose(event, reason) {
@@ -12,6 +13,8 @@ function Toaster({ message }) {
   }
 
   const color = message === "Updated User Profile" ? "success" : "warning";
+
+
   return (
     <div>
       <Snackbar
@@ -28,19 +31,25 @@ function Toaster({ message }) {
         }}
         message={message}
         action={[
-          <IconButton key="close" onClick={handleClose}>
+          <IconButton
+            key="close"
+            onClick={handleClose}
+          >
             <CloseIcon />
           </IconButton>
         ]}
       >
 
-        <Alert onClose={handleClose} severity={color} sx={{ width: '30vw' }}>
+        <Alert
+          onClose={handleClose}
+          severity={color}
+          sx={{ width: '30vw' }}
+        >
           {message}
         </Alert>
-
       </Snackbar>
     </div>
-  )
-}
+  );
+};
 
 export default Toaster;

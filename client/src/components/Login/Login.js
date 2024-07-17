@@ -14,11 +14,10 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [loginStatus, setLogingStatus] = useState("");
     const navigator = useNavigate()
-   
+
     const changeHandler = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
-
 
     const login = useGoogleLogin({
         onSuccess: async (response) => {
@@ -42,7 +41,6 @@ function Login() {
             }
         }
     });
-
 
     const googleloginUpHandler = async (googleData) => {
         setLoading(true);
@@ -68,7 +66,6 @@ function Login() {
         }
     };
 
-
     const loginHandler = async () => {
         setLoading(true);
         try {
@@ -93,6 +90,7 @@ function Login() {
         }
     }
 
+
     return (
         <>
             <Backdrop
@@ -103,7 +101,11 @@ function Login() {
             </Backdrop>
             <div className='login-container'>
                 <div className="login-image-container">
-                    <img src={logo} alt="Logo" className='login-welcome-logo' />
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className='login-welcome-logo'
+                    />
                 </div>
                 <div className="login-box">
                     <p className='login-text'>Login</p>
@@ -134,7 +136,7 @@ function Login() {
                             }
                         }}
                     />
-                    
+
                     <Button
                         onClick={loginHandler}
                         variant="outlined">
@@ -146,7 +148,10 @@ function Login() {
                         className="google-button"
                         style={{ textTransform: 'none' }}
                     >
-                        <img src={GoogleIcon} alt="Logo" className="google-icon" />
+                        <img
+                            src={GoogleIcon}
+                            alt="Logo"
+                            className="google-icon" />
                         Sign in with Google
                     </Button>
                     <p>Don't have an Account ? <Link className="login-hyper" to="/signup">Sign Up</Link></p>
