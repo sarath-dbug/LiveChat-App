@@ -1,4 +1,3 @@
-// validators.js
 
 function validateFields({ name, email, password, mobile }) {
     if (!name || !email || !password || !mobile) {

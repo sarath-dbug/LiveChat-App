@@ -18,9 +18,9 @@ const chatModel = mongoose.Schema({
         ref: "User"
     }
 },
-{
-    timestamps: true
-});
+    {
+        timestamps: true
+    });
 
 const Chat = mongoose.model("Chat", chatModel);
 module.exports = Chat;

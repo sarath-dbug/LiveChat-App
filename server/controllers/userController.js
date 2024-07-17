@@ -5,7 +5,9 @@ const generateToken = require("../config/generateToken");
 const { validateFields } = require("../utils/validators");
 
 
-//Login
+
+
+
 const loginController = expressAsyncHandler(async (req, res) => {
     const { name, password } = req.body;
     const user = await UserModel.findOne({ name })
@@ -26,15 +28,12 @@ const loginController = expressAsyncHandler(async (req, res) => {
 
 
 
-//Register
 const registerController = expressAsyncHandler(async (req, res) => {
-
     const { name, email, password, mobile, googleSign } = req.body;
 
     if (googleSign) {
-
-        // Check if the user already exists
         const user = await UserModel.findOne({ email });
+
         if (user) {
             res.status(201).json({
                 _id: user._id,
@@ -55,6 +54,7 @@ const registerController = expressAsyncHandler(async (req, res) => {
                     isAdmin: user.isAdmin,
                     token: generateToken(user._id)
                 });
+
             } else {
                 res.status(404);
                 throw new Error('Registration Error')
@@ -148,6 +148,7 @@ const imageUpload = expressAsyncHandler(async (req, res) => {
 const userProfile = expressAsyncHandler(async (req, res) => {
     try {
         const user = await UserModel.findById(req.user._id);
+
         if (user) {
             res.send(user);
         } else {
@@ -188,6 +189,7 @@ const editProfile = expressAsyncHandler(async (req, res) => {
 });
 
 
+
 const fetchChatuser = expressAsyncHandler(async (req, res) => {
     const { chat_userId } = req.params;
 
@@ -203,6 +205,8 @@ const fetchChatuser = expressAsyncHandler(async (req, res) => {
         throw new Error(error.message);
     }
 });
+
+
 
 
 module.exports = {

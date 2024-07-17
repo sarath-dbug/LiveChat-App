@@ -20,24 +20,24 @@ const userModel = mongoose.Schema({
     },
     image: {
         type: String,
-        default: ""   
+        default: ""
     },
     is_online: {
         type: Boolean,
-        default: false  
+        default: false
     }
 },
-{
-    timestamps: true
-});
+    {
+        timestamps: true
+    });
 
 
-userModel.methods.matchPassword = async function(enterPassword){
+userModel.methods.matchPassword = async function (enterPassword) {
     return await bcrypt.compare(enterPassword, this.password);
 };
 
-userModel.pre("save", async function(next){
-    if(!this.isModified){
+userModel.pre("save", async function (next) {
+    if (!this.isModified) {
         next();
     }
 

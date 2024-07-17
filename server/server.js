@@ -27,11 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 const userRouter = require('./routes/userRoutes');
 const chatRouter = require('./routes/chatRoutes');
 const messageRouter = require('./routes/messageRoutes');
 const { socket } = require("socket.io");
+
 
 const connectDB = async () => {
     try {
@@ -52,14 +52,15 @@ app.use('/user', userRouter);
 app.use('/chat', chatRouter);
 app.use('/message', messageRouter);
 
+
 // Error Handling middlewares
 app.use(notFound);
 app.use(errorHandler);
 
 
-
 const PORT = process.env.PORT || 4040
 const server = app.listen(PORT, () => console.log(`Server Running at http://localhost:${PORT}`));
+
 
 const io = require("socket.io")(server, {
     cors: {
@@ -67,7 +68,6 @@ const io = require("socket.io")(server, {
     },
     pingTimeout: 60000,
 });
-
 
 
 // Socket.io connection process

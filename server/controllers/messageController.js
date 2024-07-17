@@ -30,6 +30,7 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
             path: "chat.users",
             select: "name email image"
         });
+
         await ChatModel.findByIdAndUpdate(chatId, { latestMessage: message });
         res.json(message);
     } catch (error) {
@@ -39,19 +40,23 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
 });
 
 
+
 const allMessages = expressAsyncHandler(async (req, res) => {
     const chat_id = req.params.chatId
+
     try {
         const messages = await MessageModel.find({ chat: chat_id })
             .populate("sender", "name email image")
             .populate("reciever")
             .populate("chat");
-            res.json(messages);
+        res.json(messages);
     } catch (error) {
         res.status(400);
         throw new Error(error.message);
     }
 });
+
+
 
 
 module.exports = {

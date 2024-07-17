@@ -3,3 +3,6 @@ node_modules
 
 # Environment variables file
 .env
+
+# Ignore images in the public/images directory
+server/public/images/
