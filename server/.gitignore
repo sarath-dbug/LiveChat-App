@@ -5,4 +5,4 @@ node_modules
 .env
 
 # Ignore images in the public/images directory
-public/images/
+public/Images/
