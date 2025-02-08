@@ -16,7 +16,7 @@ import { refreshSidebarFun } from '../../features/refreshSidebar';
 import io from 'socket.io-client';
 import backendURL from '../../config/config';
 
-const ENDPOINT = 'http://localhost:8080';
+const ENDPOINT = "https://livechat-backend-8z5r.onrender.com";
 let socket;
 
 function ChatArea() {
