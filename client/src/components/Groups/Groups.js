@@ -9,6 +9,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { refreshSidebarFun } from '../../features/refreshSidebar';
 import axios from 'axios';
+import backendURL from '../../config/config';
+
 
 function Groups() {
     const lightTheme = useSelector((state) => state.themeKey);
@@ -33,7 +35,7 @@ function Groups() {
         };
 
         axios.get(
-            "http://localhost:8080/chat/fetchGroups",
+            `${backendURL}/chat/fetchGroups`,
             config
         ).then((response) => setGroups(response.data))
             .catch((error) => console.error("Error fetching groups:", error));
@@ -47,7 +49,7 @@ function Groups() {
         };
 
         axios.put(
-            "http://localhost:8080/chat/addNewUserExitedGroup",
+            `${backendURL}/chat/addNewUserExitedGroup`,
             {
                 groupId: groupId,
                 userId: user._id,

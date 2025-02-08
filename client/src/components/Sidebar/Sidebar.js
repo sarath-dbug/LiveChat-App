@@ -16,6 +16,8 @@ import { toggleTheme } from '../../features/themeSlice';
 import personImage from '../../assets/images/person.png';
 import groupsImage from '../../assets/images/groups.png';
 import axios from 'axios';
+import backendURL from '../../config/config';
+
 
 function Sidebar() {
   const userData = useMemo(() => JSON.parse(sessionStorage.getItem("userData")), []);
@@ -42,7 +44,7 @@ function Sidebar() {
             Authorization: `Bearer ${userData.data.token}`
           }
         };
-        const response = await axios.get("http://localhost:8080/chat/", config);
+        const response = await axios.get(`${backendURL}/chat/`, config);
         setConversations(response.data);
       } catch (error) {
         console.error("Error fetching conversations:", error);
@@ -111,7 +113,7 @@ function Sidebar() {
 
           <IconButton onClick={() => navigate('/app/profile')}>
             <Avatar
-              src={userProfile && userProfile.image ? `http://localhost:8080/Images/${userProfile.image}` : personImage}
+              src={userProfile && userProfile.image ? `${backendURL}/Images/${userProfile.image}` : personImage}
               className={"profile-sb-icon" + (lightTheme ? "" : " dark ")}
               alt="Remy Sharp"
             />
@@ -143,7 +145,7 @@ function Sidebar() {
                 key={index}
                 onClick={() => navigate(`chat/${conversation._id}&"${conversation.chatName}"`)}>
                 <Avatar
-                  src={conversation && conversation.image ? `http://localhost:8080/Images/${conversation.image}` : groupsImage}
+                  src={conversation && conversation.image ? `${backendURL}/Images/${conversation.image}` : groupsImage}
                   alt="Image"
                   className='sb-con-icon'
                 />
@@ -164,7 +166,7 @@ function Sidebar() {
                 key={index}
                 onClick={() => navigate(`chat/${conversation._id}&${otherUser._id}`)}>
                 <Avatar
-                  src={otherUser && otherUser.image ? `http://localhost:8080/Images/${otherUser.image}` : personImage}
+                  src={otherUser && otherUser.image ? `${backendURL}/Images/${otherUser.image}` : personImage}
                   alt="Image"
                   className='sb-con-icon'
                 />

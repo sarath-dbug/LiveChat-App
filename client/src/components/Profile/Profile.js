@@ -13,6 +13,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import Toaster from '../Toaster/Toaster';
 import { useSelector } from 'react-redux';
+import backendURL from '../../config/config';
+
 
 
 const Profile = () => {
@@ -43,7 +45,7 @@ const Profile = () => {
       }
     };
 
-    axios.get("http://localhost:8080/user/fetchUserProfile", config)
+    axios.get(`${backendURL}/user/fetchUserProfile`, config)
       .then((response) => {
         setUserProfile(response.data);
         sessionStorage.setItem("userProfile", JSON.stringify(response.data));
@@ -70,7 +72,7 @@ const Profile = () => {
     formData.append('userId', userId);
 
     try {
-      const response = await axios.post("http://localhost:8080/user/upload", formData);
+      const response = await axios.post(`${backendURL}/user/upload`, formData);
       setUpdateStatus({ msg: "Updated User Profile", key: Math.random() })
       setUserProfile(response.data);
       sessionStorage.setItem("userProfile", JSON.stringify(response.data));
@@ -92,7 +94,7 @@ const Profile = () => {
         },
       };
       const response = await axios.post(
-        "http://localhost:8080/user/editUserProfile/",
+        `${backendURL}/user/editUserProfile/`,
         { ...data, userId },
         config
       );
@@ -142,7 +144,7 @@ const Profile = () => {
           <div className={"profile-controls" + (lightTheme ? "" : " dark ")}>
             <div className={"profile-image-box" + (lightTheme ? "" : " dark ")}>
               <img
-                src={userProfile && userProfile.image ? `http://localhost:8080/Images/${userProfile.image}` : personImage}
+                src={userProfile && userProfile.image ? `${backendURL}/Images/${userProfile.image}` : personImage}
                 alt=""
                 className={'profile-image' + (lightTheme ? "" : " dark ")}
               />

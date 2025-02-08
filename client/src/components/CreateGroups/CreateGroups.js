@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import backendURL from '../../config/config';
 
 
 function CreateGroups() {
@@ -42,7 +43,7 @@ function CreateGroups() {
       }
     };
     axios.post(
-      "http://localhost:8080/chat/createGroup",
+      `${backendURL}/chat/createGroup`,
       {
         groupName: groupName,
         userId: user._id,

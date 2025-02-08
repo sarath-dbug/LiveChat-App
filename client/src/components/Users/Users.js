@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { refreshSidebarFun } from '../../features/refreshSidebar';
 import personImage from '../../assets/images/person.png';
 import Avatar from '@mui/material/Avatar';
+import backendURL from '../../config/config';
+
 
 
 function Users() {
@@ -33,7 +35,7 @@ function Users() {
             }
         };
 
-        axios.get("http://localhost:8080/user/fetchUsers", config)
+        axios.get(`${backendURL}/user/fetchUsers`, config)
             .then((data) => setUsers(data.data))
             .catch((error) => console.error("Error fetching users:", error));
     }, [refresh, userData]);
@@ -44,7 +46,7 @@ function Users() {
                 Authorization: `Bearer ${userData.data.token}`
             }
         };
-        axios.post("http://localhost:8080/chat", { userId }, config)
+        axios.post(`${backendURL}/chat`, { userId }, config)
             .then(() => {
                 dispatch(refreshSidebarFun());
             })
@@ -110,7 +112,7 @@ function Users() {
                             onClick={() => handleUserClick(user._id)}
                         >
                             <Avatar
-                                src={user && user.image ? `http://localhost:8080/Images/${user.image}` : personImage}
+                                src={user && user.image ? `${backendURL}/Images/${user.image}` : personImage}
                                 alt="Image"
                                 sx={{
                                     width: 50,

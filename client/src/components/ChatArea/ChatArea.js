@@ -14,11 +14,14 @@ import Skeleton from '@mui/material/Skeleton';
 import axios from 'axios';
 import { refreshSidebarFun } from '../../features/refreshSidebar';
 import io from 'socket.io-client';
+import backendURL from '../../config/config';
 
 const ENDPOINT = 'http://localhost:8080';
 let socket;
 
 function ChatArea() {
+  console.log(`${backendURL}/message`);
+  
   const lightTheme = useSelector((state) => state.themeKey);
   const refresh = useSelector((state) => state.refreshKey);
   const dispatch = useDispatch();
@@ -45,7 +48,7 @@ function ChatArea() {
 
     axios
       .post(
-        'http://localhost:8080/message/',
+        `${backendURL}/message/`,
         {
           content: messageContent,
           chatId: chat_id,
@@ -90,7 +93,7 @@ function ChatArea() {
       },
     };
     axios
-      .get(`http://localhost:8080/message/${chat_id}`, config)
+      .get(`${backendURL}/message/${chat_id}`, config)
       .then(({ data }) => {
         setAllMessages(data);
         setLoading(true);
@@ -110,7 +113,7 @@ function ChatArea() {
             "Content-type": "application/json",
           },
         };
-        const { data } = await axios.get(`http://localhost:8080/user/fetchChatuser/${chat_userId}`, config);
+        const { data } = await axios.get(`${backendURL}/user/fetchChatuser/${chat_userId}`, config);
         console.error('fetching chat user:', data);
         setChatUser(data);
       } catch (error) {
@@ -161,7 +164,7 @@ function ChatArea() {
         {!isName ? (
           <div className={'chatArea-header' + (lightTheme ? '' : ' dark ')}>
             <Avatar
-              src={chatuser && chatuser.image ? `http://localhost:8080/Images/${chatuser.image}` : personImage}
+              src={chatuser && chatuser.image ? `${backendURL}/Images/${chatuser.image}` : personImage}
               alt="Remy Sharp"
               sx={{ width: 50, height: 50, marginLeft: 2, marginRight: 1 }}
             />

@@ -7,6 +7,8 @@ import axios from 'axios';
 import Toaster from '../Toaster/Toaster';
 import { useGoogleLogin } from '@react-oauth/google';
 import GoogleIcon from "../../assets/icons/google.png";
+import backendURL from '../../config/config';
+
 
 function Login() {
 
@@ -51,7 +53,7 @@ function Login() {
                 },
             };
             const response = await axios.post(
-                "http://localhost:8080/user/login/",
+                `${backendURL}/user/login/`,
                 googleData,
                 config
             );
@@ -75,7 +77,7 @@ function Login() {
                 },
             };
             const response = await axios.post(
-                "http://localhost:8080/user/login/",
+                `${backendURL}/user/login/`,
                 data,
                 config
             );

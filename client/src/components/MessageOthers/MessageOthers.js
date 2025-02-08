@@ -3,6 +3,7 @@ import './MessageOthers.css';
 import { useSelector } from 'react-redux';
 import personImage from '../../assets/images/person.png';
 import Avatar from '@mui/material/Avatar';
+import backendURL from '../../config/config';
 
 
 
@@ -15,7 +16,7 @@ function MessageOthers({ props }) {
       <div className={"other-message-container" + (lightTheme ? "" : " dark ")}>
         <div className={"other-conversation-container" + (lightTheme ? "" : " dark ")}>
           <Avatar
-            src={props.sender && props.sender.image ? `http://localhost:8080/Images/${props.sender.image}` : personImage}
+            src={props.sender && props.sender.image ? `${backendURL}/Images/${props.sender.image}` : personImage}
             alt="Remy Sharp"
             sx={{
               width: 40,
